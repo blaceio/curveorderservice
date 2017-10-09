@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Implementation-Title: curveorderservice
+Implementation-Version: ${git.commit.time}.${git.commit.id.abbrev}
+Built-By: ronanhughes
+Implementation-Vendor-Id: com.blace.microservices
+Build-Jdk: 1.8.0_101
+Implementation-URL: http://projects.spring.io/spring-boot/curveorderse
+ rvice/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+Main-Class: io.blace.microservices.curveorderservice.Application
+
