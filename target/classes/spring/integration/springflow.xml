@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration
+		http://www.springframework.org/schema/integration/spring-integration.xsd">
+	
+	<int:channel id="orderchannel"/>
+	<int:channel id="replychannel"/>
+
+	<int:gateway id="ordergateway" service-interface="io.blace.microservices.curveorderservice.integration.gateway.OrderGateway" default-request-channel="orderchannel" default-reply-channel="replychannel"/>
+	
+	<bean id="orderService" class="io.blace.microservices.curveorderservice.integration.services.OrderService"/>
+	<bean id="plService" class="io.blace.microservices.curveorderservice.integration.services.PLService"/>
+		
+	<int:chain id="orderchain" input-channel="orderchannel" output-channel="replychannel">
+		<int:service-activator ref="orderService" method="getorders"/>
+		<int:service-activator ref="plService" method="calcnative"/>
+		<int:service-activator ref="plService" method="calcusd"/>
+	</int:chain>
+	
+ </beans>

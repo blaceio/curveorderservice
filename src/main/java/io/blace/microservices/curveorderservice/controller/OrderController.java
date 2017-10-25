@@ -20,11 +20,15 @@ public class OrderController {
     		
     		Sort sort = new Sort(Sort.Direction.DESC, "tradedate");
     		
-    		if( !request.getClient().equals("")) {
-    			return curveorderrepo.findByClient(request.getClient(), request.getStartdate(), request.getEnddate(), sort);
+    		if( request.isTodays()) {
+    			return curveorderrepo.findTodays(request.getStartdate(), request.getEnddate(), sort);
     		}
     		
-    		return curveorderrepo.findAll(request.getStartdate(), request.getEnddate(), sort);
+    		if( !request.getClient().equals("")) {
+    			return curveorderrepo.findByClient(request.getClient(), request.getStartdate(), request.getEnddate(), request.isMatched(), sort);
+    		}
+
+    		return curveorderrepo.findByMatched(request.getStartdate(), request.getEnddate(), request.isMatched(), sort);
     
     }
     

@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 
+import io.blace.microservices.curveorderservice.mongo.fixexec.FIXExecutionReport;
+
 public class CurveOrder {
 
 	@Id
@@ -20,7 +22,11 @@ public class CurveOrder {
 	private Date valuedate;
 	private String trader;
 	private String type;
-	private List<Order> legs;
+	private Order clientleg;
+	private Order execleg;
+	private PL pl;
+	private List<FIXExecutionReport> fixexecutions;
+	
 	public String getId() {
 		return id;
 	}
@@ -87,17 +93,36 @@ public class CurveOrder {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public List<Order> getLegs() {
-		return legs;
+	public Order getClientleg() {
+		return clientleg;
 	}
-	public void setLegs(List<Order> legs) {
-		this.legs = legs;
+	public void setClientleg(Order clientleg) {
+		this.clientleg = clientleg;
+	}
+	public Order getExecleg() {
+		return execleg;
+	}
+	public void setExecleg(Order execleg) {
+		this.execleg = execleg;
+	}
+	public PL getPl() {
+		return pl;
+	}
+	public void setPl(PL pl) {
+		this.pl = pl;
+	}
+	public List<FIXExecutionReport> getFixexecutions() {
+		return fixexecutions;
+	}
+	public void setFixexecutions(List<FIXExecutionReport> fixexecutions) {
+		this.fixexecutions = fixexecutions;
 	}
 	@Override
 	public String toString() {
 		return "CurveOrder [id=" + id + ", orderid=" + orderid + ", pair=" + pair + ", ccy=" + ccy + ", matched="
 				+ matched + ", tradedate=" + tradedate + ", client=" + client + ", quantity=" + quantity
-				+ ", valuedate=" + valuedate + ", trader=" + trader + ", type=" + type + ", legs=" + legs + "]";
+				+ ", valuedate=" + valuedate + ", trader=" + trader + ", type=" + type + ", clientleg=" + clientleg
+				+ ", execleg=" + execleg + ", pl=" + pl + ", fixexecutions=" + fixexecutions + "]";
 	}
 	
 }

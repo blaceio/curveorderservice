@@ -9,12 +9,15 @@ import org.springframework.data.mongodb.repository.Query;
 
 public interface CurveOrderRepository extends MongoRepository<CurveOrder, String> {
 	
-	@Query(value = "{'tradedate':{ $gte: ?0, $lte: ?1}}")
-	List<CurveOrder> findAll( Date startdate, Date enddate, Sort sort);
+	@Query(value = "{'matched': ?2, 'tradedate':{ $gt: ?0, $lt: ?1}}")
+	List<CurveOrder> findByMatched( Date startdate, Date enddate, boolean matched, Sort sort);
 	
-	@Query(value = "{'client': '?0', 'tradedate':{ $gte: ?1, $lte: ?2}}")
-	List<CurveOrder> findByClient(String client, Date startdate, Date enddate, Sort sort);
+	@Query(value = "{'tradedate':{ $gt: ?0, $lt: ?1}}")
+	List<CurveOrder> findTodays( Date startdate, Date enddate, Sort sort);
 	
-	@Query(value = "{'matched': 'false'}")
+	@Query(value = "{'client': '?0', 'matched': ?2, 'tradedate':{ $gt: ?1, $lt: ?2}}")
+	List<CurveOrder> findByClient(String client, Date startdate, Date enddate, boolean matched, Sort sort);
+	
+	@Query(value = "{'matched': false}")
 	List<CurveOrder> findUnMatched(Sort sort);
 }

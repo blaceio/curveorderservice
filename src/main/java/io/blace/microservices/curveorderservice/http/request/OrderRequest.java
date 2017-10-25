@@ -6,11 +6,15 @@ public class OrderRequest {
 	private String client;
 	private Date startdate;
 	private Date enddate;
+	private boolean matched;
+	private boolean todays;
 	
 	public OrderRequest() {
 		this.client = "";
 		this.startdate = new Date();
 		this.enddate = new Date();
+		this.matched = true;
+		this.todays = false;
 	}
 	public String getClient() {
 		return client;
@@ -30,9 +34,22 @@ public class OrderRequest {
 	public void setEnddate(Date enddate) {
 		this.enddate = enddate;
 	}
+	public boolean isMatched() {
+		return matched;
+	}
+	public void setMatched(boolean matched) {
+		this.matched = matched;
+	}
+	public boolean isTodays() {
+		return todays;
+	}
+	public void setTodays(boolean todays) {
+		this.todays = todays;
+	}
 	@Override
 	public String toString() {
-		return "OrderRequest [client=" + client + ", startdate=" + startdate + ", enddate=" + enddate + "]";
+		return "OrderRequest [client=" + client + ", startdate=" + startdate + ", enddate=" + enddate + ", matched="
+				+ matched + ", todays=" + todays + "]";
 	}
-	
+
 }
