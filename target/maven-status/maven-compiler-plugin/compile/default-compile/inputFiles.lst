@@ -11,6 +11,7 @@
 /Users/ronanhughes/GitHub/blaceio/curveorderservice/src/main/java/io/blace/microservices/curveorderservice/mongo/fxspot/FxSpotRepository.java
 /Users/ronanhughes/GitHub/blaceio/curveorderservice/src/main/java/io/blace/microservices/curveorderservice/controller/FIXController.java
 /Users/ronanhughes/GitHub/blaceio/curveorderservice/src/main/java/io/blace/microservices/curveorderservice/http/request/OrderRequest.java
-/Users/ronanhughes/GitHub/blaceio/curveorderservice/src/main/java/io/blace/microservices/curveorderservice/controller/OrderController.java
 /Users/ronanhughes/GitHub/blaceio/curveorderservice/src/main/java/io/blace/microservices/curveorderservice/mongo/curveorder/PL.java
 /Users/ronanhughes/GitHub/blaceio/curveorderservice/src/main/java/io/blace/microservices/curveorderservice/mongo/fixexec/FIXExecutionReportRepository.java
+/Users/ronanhughes/GitHub/blaceio/curveorderservice/src/main/java/io/blace/microservices/curveorderservice/mongo/curveorder/OrderSummary.java
+/Users/ronanhughes/GitHub/blaceio/curveorderservice/src/main/java/io/blace/microservices/curveorderservice/mongo/curveorder/Summary.java

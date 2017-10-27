@@ -19,6 +19,9 @@
 		<int:service-activator ref="orderService" method="getorders"/>
 		<int:service-activator ref="plService" method="calcnative"/>
 		<int:service-activator ref="plService" method="calcusd"/>
+		<int:service-activator ref="plService" method="calcfees"/>
+		<int:service-activator ref="plService" method="calcnet"/>
+		<int:service-activator ref="plService" method="calcsummary"/>
 	</int:chain>
 	
  </beans>
