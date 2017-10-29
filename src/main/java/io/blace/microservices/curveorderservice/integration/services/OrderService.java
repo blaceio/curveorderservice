@@ -22,12 +22,8 @@ public class OrderService {
 
 		Sort sort = new Sort(Sort.Direction.DESC, "tradedate");
 
-		if( _request.isTodays()) {
-			return curveorderrepo.findTodays(_request.getStartdate(), _request.getEnddate(), sort);
-		}
-
 		if( !_request.getClient().equals("")) {
-			return curveorderrepo.findByClient(_request.getClient(), _request.getStartdate(), _request.getEnddate(), _request.isMatched(), sort);
+			return curveorderrepo.findByClientAndByMatched(_request.getClient(), _request.getStartdate(), _request.getEnddate(), _request.isMatched(), sort);
 		}
 
 		return curveorderrepo.findByMatched(_request.getStartdate(), _request.getEnddate(), _request.isMatched(), sort);

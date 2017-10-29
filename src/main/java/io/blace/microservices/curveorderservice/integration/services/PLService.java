@@ -144,8 +144,8 @@ public class PLService {
 		
 		List<Summary> _summaries = new ArrayList<Summary>();
 		for (Map.Entry<String, Summary> entry : summaries.entrySet()) {
-			entry.getValue().setProfit((entry.getValue().getProfit()/net)*100);
-			entry.getValue().setVolume((entry.getValue().getVolume()/volume)*100);
+			entry.getValue().setProfitpercent((entry.getValue().getProfit()/net)*100);
+			entry.getValue().setVolumepercent((entry.getValue().getVolume()/volume)*100);
 			_summaries.add(entry.getValue());
 		}
 		

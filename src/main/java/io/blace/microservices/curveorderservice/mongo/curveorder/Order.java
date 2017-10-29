@@ -4,6 +4,8 @@ public class Order {
 
 	private boolean buy;
 	private double price;
+	private double curveprice;
+	
 	public boolean isBuy() {
 		return buy;
 	}
@@ -16,9 +18,15 @@ public class Order {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	public double getCurveprice() {
+		return curveprice;
+	}
+	public void setCurveprice(double curveprice) {
+		this.curveprice = curveprice;
+	}
 	@Override
 	public String toString() {
-		return "Order [buy=" + buy + ", price=" + price + "]";
+		return "Order [buy=" + buy + ", price=" + price + ", curveprice=" + curveprice + "]";
 	}
 	
 }
