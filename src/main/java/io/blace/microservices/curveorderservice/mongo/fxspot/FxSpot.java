@@ -58,5 +58,4 @@ public class FxSpot {
 				+ ", risk=" + risk + "]";
 	}
 
-	    	
 }

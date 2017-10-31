@@ -1,11 +1,14 @@
 package io.blace.microservices.curveorderservice.mongo.curveorder;
 
+import io.blace.microservices.curveorderservice.mongo.fxspot.FxSpot;
+
 public class PL {
 
 	private double plnative;
 	private String plccy;
 	private double usdpl;
 	private double usdnotional;
+	private FxSpot reffx;
 	private double fx;
 	private double costs;
 	private double net;
@@ -21,6 +24,12 @@ public class PL {
 	}
 	public void setUsdpl(double usdpl) {
 		this.usdpl = usdpl;
+	}
+	public FxSpot getReffx() {
+		return reffx;
+	}
+	public void setReffx(FxSpot reffx) {
+		this.reffx = reffx;
 	}
 	public double getFx() {
 		return fx;
@@ -55,7 +64,7 @@ public class PL {
 	@Override
 	public String toString() {
 		return "PL [plnative=" + plnative + ", plccy=" + plccy + ", usdpl=" + usdpl + ", usdnotional=" + usdnotional
-				+ ", fx=" + fx + ", costs=" + costs + ", net=" + net + "]";
+				+ ", reffx=" + reffx + ", fx=" + fx + ", costs=" + costs + ", net=" + net + "]";
 	}
 
 }

@@ -1,6 +1,9 @@
 package io.blace.microservices.curveorderservice.mongo.curveorder;
 
+import java.util.Collection;
 import java.util.List;
+
+import io.blace.microservices.curveorderservice.mongo.fxspot.FxSpot;
 
 public class OrderSummary {
 
@@ -10,6 +13,7 @@ public class OrderSummary {
 	private double fees;
 	private double net;
 	private List<Summary> clientsummary;
+	private Collection<FxSpot> usedspots;
 
 	public List<CurveOrder> getOrders() {
 		return orders;
@@ -47,9 +51,16 @@ public class OrderSummary {
 	public void setClientsummary(List<Summary> clientsummary) {
 		this.clientsummary = clientsummary;
 	}
+	public Collection<FxSpot> getUsedspots() {
+		return usedspots;
+	}
+	public void setUsedspots(Collection<FxSpot> usedspots) {
+		this.usedspots = usedspots;
+	}
 	@Override
 	public String toString() {
 		return "OrderSummary [orders=" + orders + ", volume=" + volume + ", gross=" + gross + ", fees=" + fees
-				+ ", net=" + net + ", clientsummary=" + clientsummary + "]";
+				+ ", net=" + net + ", clientsummary=" + clientsummary + ", usedspots=" + usedspots + "]";
 	}
+	
 }

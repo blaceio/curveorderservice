@@ -5,19 +5,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import io.blace.microservices.curveorderservice.http.request.FxSpotRequest;
 import io.blace.microservices.curveorderservice.mongo.curveorder.CurveOrder;
 import io.blace.microservices.curveorderservice.mongo.curveorder.OrderSummary;
 import io.blace.microservices.curveorderservice.mongo.curveorder.PL;
 import io.blace.microservices.curveorderservice.mongo.curveorder.Summary;
 import io.blace.microservices.curveorderservice.mongo.fxspot.FxSpot;
-import io.blace.microservices.curveorderservice.mongo.fxspot.FxSpotRepository;
 
+@Service
 public class PLService {
-
-	@Autowired
-	private FxSpotRepository fxspotrepo;
+	
+	@Value("${fxspotservice.dateriskurl}")
+	private String dateriskurl;
+	
+	@Value("${fxspotservice.dateriskorbaseurl}")
+	private String dateriskorbaseurl;
+	
+	private final RestTemplate resttemplate;
+	
+	public PLService(RestTemplateBuilder resttemplatebuilder) {
+		this.resttemplate = resttemplatebuilder.build();
+	}
 	
 	public List<CurveOrder> calcnative(List<CurveOrder> orders) {
 
@@ -63,14 +76,16 @@ public class PLService {
 					order.getPl().setUsdnotional(order.getQuantity());
 				}
 				if( baseccy.equals("USD")) {
-					FxSpot fx = fxspotrepo.findByRisk(riskccy);
+					
+					FxSpot fx = resttemplate.postForObject(dateriskurl, new FxSpotRequest(order.getTradedate(), "", riskccy), FxSpot.class);
+					order.getPl().setReffx(fx);
 					order.getPl().setFx(1 / fx.getRate());
 					order.getPl().setUsdpl(plnative * order.getPl().getFx());
 					order.getPl().setUsdnotional(order.getQuantity() * order.getPl().getFx());
 				}
 				if( !baseccy.equals("USD") && !riskccy.equals("USD")) {
-					FxSpot fx = fxspotrepo.findByRiskOrBase(riskccy);
-					
+					FxSpot fx = resttemplate.postForObject(dateriskorbaseurl, new FxSpotRequest(order.getTradedate(), "", riskccy), FxSpot.class);
+					order.getPl().setReffx(fx);
 					if( riskccy.equals(fx.getBase())) {
 						order.getPl().setFx(fx.getRate());
 					} else {
@@ -120,9 +135,15 @@ public class PLService {
 		double fees = 0.;
 		double net = 0.;
 		Map<String, Summary> summaries = new HashMap<String, Summary>();
+		Map<String, FxSpot> usedspots = new HashMap<String, FxSpot>();
 		
 		for( CurveOrder order : orders ) {
+	
 			if( order.isMatched() ) {
+				
+				if( !(order.getPl().getReffx() == null) )
+						usedspots.put(order.getPl().getReffx().getId(), order.getPl().getReffx());
+				
 				volume += order.getPl().getUsdnotional();
 				gross += order.getPl().getUsdpl() * order.getQuantity();
 				fees += order.getPl().getCosts();
@@ -156,6 +177,7 @@ public class PLService {
 		ordersummary.setNet(net);
 		ordersummary.setOrders(orders);
 		ordersummary.setClientsummary(_summaries);
+		ordersummary.setUsedspots(usedspots.values());
 		
 		return ordersummary;
 	}
